@@ -13,14 +13,14 @@
 </details>
 
 
-<h4>Решение:</h4>h4>
+<h4>Решение:</h4>
 
 • Запустим Bash в новом пространстве имен командой (так как команда требует привилегии суперпользователя, то выполняем через sudo):
 ```
 sudo unshare -pf -n --mount-proc bash
 ```
 
-![Изображение](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1920px-Markdown-mark.svg.png
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20215958.jpg?raw=true  "Выполнение sudo unshare -pf -n --mount-proc bash")
 
 • Откроем второй терминал, где будем наглядно смотреть, в тек. случае, что проишло. Посмотрим командой:
 ```
