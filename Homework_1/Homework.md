@@ -28,6 +28,8 @@ ps -afx
 ```
 • Мы видим несколько родительских процессов, из которых происходят одинаковые процессы Bash. Заметим, что PID у нового процесса 2750+
 
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20220118.jpg?raw=true  "Выполнение ps -afx")
+
 • Для проверки и наглядности смотрим той же командой ps -afx в root терминале ps -afx. Здесь мы видим, что изолированная оболчка видит всего два процесса. При этом PID процессов начинается с 1.
 
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20220302.jpg?raw=true  "Выполнение ps -afx")
