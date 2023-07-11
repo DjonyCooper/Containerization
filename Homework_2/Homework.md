@@ -85,10 +85,12 @@ sudo cat /var/lib/lxc/djc_test/config
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221931.jpg?raw=true  "Выполнение sudo cat /var/lib/lxc/djc_test/config")
 
 • Добавим строку: lxc.cgroup2.memory.max = 256M в файл конфигурации:
+
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20222202.jpg?raw=true  "Добавление строки lxc.cgroup2.memory.max")
 
-• Мы ограничили потребление памяти, установив значение: 256 мб. Останавливаем контейнер (sudo lxc-stop -k -n djc_test) и повторно запускаем его. Вводим следующую команду, что бы убедиться, что ограничение работает:
+• Мы ограничили потребление памяти, установив значение: 256 мб. Останавливаем контейнер и повторно запускаем его. Проверяем, что ограничение работает:
 ```
+sudo lxc-stop -k -n djc_test
 sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max
 ```
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20224230.jpg?raw=true  "sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max")
