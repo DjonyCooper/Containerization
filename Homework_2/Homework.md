@@ -45,9 +45,6 @@ lxc-create -n djc_test -t ubuntu
 ```
 
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221126.jpg?raw=true  "Выполнение lxc-create -n djc_test -t ubuntu")
-
-• Если создание прошло успешно, должно отобразиться след. сообщение:
-
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221217.jpg?raw=true  "Контейнер создан!")
 
 • Видим, что контейнер создан, со стандартными уч. данными. login: ubuntu, secret: ubuntu
