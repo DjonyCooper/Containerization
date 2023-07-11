@@ -91,6 +91,7 @@ sudo cat /var/lib/lxc/djc_test/config
 • Мы ограничили потребление памяти, установив значение: 256 мб. Останавливаем контейнер и повторно запускаем его. Проверяем, что ограничение работает:
 ```
 sudo lxc-stop -k -n djc_test
+sudo lxc-start -d -n djc_test
 sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max
 ```
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20224230.jpg?raw=true  "sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max")
