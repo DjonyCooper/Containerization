@@ -77,6 +77,7 @@ cat sys/fs/cgroup/.lxc/memory.max
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221729.jpg?raw=true  "Ограничения памяти")
 
 • Мы видим, что ограничение памяти в обоих случаях установлено на максимальное значение. Выходим.
+
 • Для того, что бы ограничить потребление памяти контейнером, необходимо добавить данные в файл конфигурации. Для начала убедимся, что ограничений нет:
 ```
 sudo cat /var/lib/lxc/djc_test/config
@@ -93,17 +94,20 @@ sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20224230.jpg?raw=true  "sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max")
 
 • Отлично! Система пересчитала и выдала результат, где много цифр. Не пугаемся, это значение примерно равно 256М
+
 • Как мы видим, после ввода команды: sudo lxc-ls -f, контейнер djc_test запущен и в автозапуске стоит 0 (что означает, что автозапуск контейнера отключен). Нам необходимо включить автозапуск, для этого вносим правки в файл конфигурации:
 ```
 sudo nano /var/lib/lxc/djc_test/config
 ```
 • Добавляем строку: lxc.start.auto = 1, меняющую параметр автозапуска на 1 (включено)
+
 • Перезагружаемся. Далее посмотрим список запущенных контейнеров и проверим значение автозапуска у контейнера djc_test:
 ```
 sudo lxc-ls -f
 ```
 ![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20225033.jpg?raw=true  "sudo lxc-ls -f")
 • Как видим - автозапуск работает.
+
 • Для логирования, при запуске контейнера в параметрах можно указать, где хранить логи:
 ```
 lxc-start -n djc_test --logfile log.log
