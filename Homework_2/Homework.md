@@ -23,10 +23,7 @@
 ```
 sudo apt install lxc lxc-templates uidmap
 ```
-
-![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20215958.jpg?raw=true  "Выполнение sudo apt install lxc lxc-templates uidmap")
-
-• Пытаемся проверить версию lxc:
+• Проверяем версию lxc:
 ```
 lxc version
 ```
@@ -36,15 +33,18 @@ lxd init
 ```
 • После инициализации, проверка версии отрабатывает корректно:
 
-![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20220118.jpg?raw=true  "Выполнение lxc version")
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20211553.jpg?raw=true  "lxd init")
 
-• Далее создаем новый контейнер с именем djc_test:
+• Далее создаем новый контейнер с именем djc_test (из под рута):
+```
+lxc-create -n djc_test -t ubuntu
+```
 
-![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20220302.jpg?raw=true  "Выполнение ps -afx")
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221126.jpg?raw=true  "Выполнение lxc-create -n djc_test -t ubuntu")
 
 • Если создание прошло успешно, должно отобразиться след. сообщение:
 
-![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20220413.jpg?raw=true  "Контейнер создан!")
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221217.jpg?raw=true  "Контейнер создан!")
 
 • Видим, что контейнер создан, со стандартными уч. данными. login: ubuntu, secret: ubuntu
 
@@ -52,34 +52,45 @@ lxd init
 ```
 sudo lxc-start -d -n djc_test
 ```
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221400.jpg?raw=true  "Выполнение sudo lxc-start -d -n djc_test")
 
 • После ввода команды - ошибок и доп. сообщений нет, значит команда успешно выполнена. Проверим:
 ```
 sudo lxc-attach -n djc_test
 ```
-• Отлично, вход в контейнер из под рута выполнен успешно:
+• Отлично, вход в контейнер выполнен успешно:
 
-![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_1/Screenshots/Скриншот%2009-07-2023%20220510.jpg?raw=true  "Выполнение ping ya.ru")
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221457.jpg?raw=true  "Выполнение sudo lxc-attach -n djc_test")
 
 • Посмотрим данные по памяти:
 ```
 free -m
 ```
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221545.jpg?raw=true  "Выполнение free -m")
+
 • Считываем данные об ограничении памяти из файла memory.max в директориях sys/fs/cgroup/ и sys/fs/cgroup/.lxc/ :
 ```
 cat sys/fs/cgroup/memory.max
 cat sys/fs/cgroup/.lxc/memory.max
 ```
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221729.jpg?raw=true  "Ограничения памяти")
+
 • Мы видим, что ограничение памяти в обоих случаях установлено на максимальное значение. Выходим.
 • Для того, что бы ограничить потребление памяти контейнером, необходимо добавить данные в файл конфигурации. Для начала убедимся, что ограничений нет:
 ```
 sudo cat /var/lib/lxc/djc_test/config
 ```
-• Добавим строку: lxc.cgroup2.memory.max = 256M в файл конфигурации
-• Мы ограничили потребление памяти, задав значение: 256 мб. Останавливаем контейнер (sudo lxc-stop -k -n djc_test) и повторно запускаем его. Вводим следующую команду, что бы убедиться, что ограничение работает:
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20221931.jpg?raw=true  "Выполнение sudo cat /var/lib/lxc/djc_test/config")
+
+• Добавим строку: lxc.cgroup2.memory.max = 256M в файл конфигурации:
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20222202.jpg?raw=true  "Добавление строки lxc.cgroup2.memory.max")
+
+• Мы ограничили потребление памяти, установив значение: 256 мб. Останавливаем контейнер (sudo lxc-stop -k -n djc_test) и повторно запускаем его. Вводим следующую команду, что бы убедиться, что ограничение работает:
 ```
 sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max
 ```
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20224230.jpg?raw=true  "sudo cat /sys/fs/cgroup/lxc.payload.djc_test/mempry.max")
+
 • Отлично! Система пересчитала и выдала результат, где много цифр. Не пугаемся, это значение примерно равно 256М
 • Как мы видим, после ввода команды: sudo lxc-ls -f, контейнер djc_test запущен и в автозапуске стоит 0 (что означает, что автозапуск контейнера отключен). Нам необходимо включить автозапуск, для этого вносим правки в файл конфигурации:
 ```
@@ -90,7 +101,8 @@ sudo nano /var/lib/lxc/djc_test/config
 ```
 sudo lxc-ls -f
 ```
-• Как видим, все работает - автозапуск работает.
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20225033.jpg?raw=true  "sudo lxc-ls -f")
+• Как видим - автозапуск работает.
 • Для логирования, при запуске контейнера в параметрах можно указать, где хранить логи:
 ```
 lxc-start -n djc_test --logfile log.log
@@ -99,3 +111,4 @@ lxc-start -n djc_test --logfile log.log
 ```
 sudo lxc-destroy -n djc_test
 ```
+![Изображение](https://github.com/DjonyCooper/Containerization/blob/main/Homework_2/Screenshots/Скриншот%2011-07-2023%20225237.jpg?raw=true "sudo lxc-destroy -n djc_test")
